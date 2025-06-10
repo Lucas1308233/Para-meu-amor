@@ -680,26 +680,26 @@
       <div class="gallery" id="gallery">
         <div class="gallery-item-wrapper">
             <div class="polaroid-frame">
-                <div class="gallery-item" data-video-url="assets/video1.mp4"> <img src="assets/foto4.jpg" alt="Foto 1"> <div class="caption">nosso conto</div>
-                </div>
+              <div class="gallery-item" data-video-url="assets/video1.mp4"> <img src="assets/foto4.jpg" alt="Foto 1"> <div class="caption">nosso conto</div>
+              </div>
             </div>
         </div>
         <div class="gallery-item-wrapper">
             <div class="polaroid-frame">
-                <div class="gallery-item" data-video-url="assets/video2.mp4"> <img src="assets/foto1.jpg" alt="Foto 2"> <div class="caption">Nossa Historia</div>
-                </div>
+              <div class="gallery-item" data-video-url="assets/video2.mp4"> <img src="assets/foto1.jpg" alt="Foto 2"> <div class="caption">Nossa Historia</div>
+              </div>
             </div>
         </div>
         <div class="gallery-item-wrapper">
             <div class="polaroid-frame">
-                <div class="gallery-item" data-video-url="assets/video4.mp4"> <img src="assets/foto2.jpg" alt="Foto 3"> <div class="caption">Minha felicidade</div>
-                </div>
+              <div class="gallery-item" data-video-url="assets/video4.mp4"> <img src="assets/foto2.jpg" alt="Foto 3"> <div class="caption">Minha felicidade</div>
+              </div>
             </div>
         </div>
         <div class="gallery-item-wrapper">
             <div class="polaroid-frame">
-                <div class="gallery-item" data-video-url="assets/video3.mp4"> <img src="assets/foto3.jpg" alt="Foto 4"> <div class="caption">Momentos Unicos</div>
-                </div>
+              <div class="gallery-item" data-video-url="assets/video3.mp4"> <img src="assets/foto3.jpg" alt="Foto 4"> <div class="caption">Momentos Unicos</div>
+              </div>
             </div>
         </div>
       </div>
@@ -763,19 +763,18 @@
       const videoWrapper = videoModal.querySelector('.video-wrapper');
       videoWrapper.innerHTML = '';
 
-      // MODIFICAÇÃO AQUI: Removemos a verificação de caminho local de C:\Users\
-      // Agora esperamos que `videoUrl` já seja um caminho relativo ou URL da web
-      // Já que você está usando GitHub Pages, ele não terá acesso a caminhos locais.
-
-      // Se a URL for um vídeo do YouTube, trate-o como tal.
+      // MODIFICAÇÃO AQUI: Ajustei a detecção de URLs do YouTube.
+      // Se a URL for um vídeo do YouTube (formatos comuns), trate-o como tal.
       // Caso contrário, trate-o como um arquivo de vídeo local (dentro do seu repositório).
-      if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+      if (videoUrl.includes('youtube.com/watch?v=') || videoUrl.includes('youtu.be/')) { // Detecção de YouTube mais genérica
         const iframe = document.createElement('iframe');
         let embedUrl = videoUrl;
         if (videoUrl.includes('watch?v=')) {
           embedUrl = videoUrl.replace('watch?v=', 'embed/');
+        } else if (videoUrl.includes('youtu.be/')) {
+            embedUrl = videoUrl.replace('youtu.be/', 'www.youtube.com/embed/');
         }
-        embedUrl = embedUrl.split('&t=')[0].split('?t=')[0]; // Remove timestamp
+        embedUrl = embedUrl.split('&t=')[0].split('?t=')[0]; // Remove timestamp e outros parâmetros irrelevantes
         iframe.setAttribute('src', embedUrl + '?autoplay=1&mute=0');
         iframe.setAttribute('frameborder', '0');
         iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
